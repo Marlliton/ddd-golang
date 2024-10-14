@@ -1,4 +1,4 @@
-package services
+package order
 
 import (
 	"context"
@@ -15,8 +15,8 @@ import (
 type OrderConfiguration func(os *OrderService) error
 
 type OrderService struct {
-	customerRepo customer.CustomerRepository
-	productRepo  product.ProductRepository
+	customerRepo customer.Repository
+	productRepo  product.Repository
 }
 
 func NewOrderService(cfgs ...OrderConfiguration) (*OrderService, error) {
@@ -59,6 +59,20 @@ func (os *OrderService) CreateOrder(customerID uuid.UUID, productsIDs []uuid.UUI
 	return total, nil
 }
 
+func (os *OrderService) AddCustomer(name string) (uuid.UUID, error) {
+	c, err := customer.NewCustomer(name)
+	if err != nil {
+		return uuid.Nil, err
+	}
+
+	err = os.customerRepo.Add(c)
+	if err != nil {
+		return uuid.Nil, err
+	}
+
+	return c.GetId(), nil
+}
+
 func WithMemoryProductRepository(products []product.Product) OrderConfiguration {
 	return func(os *OrderService) error {
 		pr := prodmemory.New()
@@ -75,7 +89,7 @@ func WithMemoryProductRepository(products []product.Product) OrderConfiguration 
 	}
 }
 
-func WithCustomerRepository(cr customer.CustomerRepository) OrderConfiguration {
+func WithCustomerRepository(cr customer.Repository) OrderConfiguration {
 	return func(os *OrderService) error {
 		os.customerRepo = cr
 		return nil

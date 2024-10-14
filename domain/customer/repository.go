@@ -12,7 +12,7 @@ var (
 	ErrUdateCustumer       = errors.New("failed to updadate the custumer")
 )
 
-type CustomerRepository interface {
+type Repository interface {
 	Get(uuid.UUID) (Customer, error)
 	Add(Customer) error
 	Update(Customer) error
