@@ -4,7 +4,6 @@ import (
 	"errors"
 	"testing"
 
-	"github.com/Marlliton/ddd-golang/aggregate"
 	"github.com/Marlliton/ddd-golang/domain/product"
 	"github.com/google/uuid"
 )
@@ -12,7 +11,7 @@ import (
 func TestMemoryProduct_Add(t *testing.T) {
 	repo := New()
 
-	product, err := aggregate.NewProduct("Beer", "Good for your're health", 1.99)
+	product, err := product.NewProduct("Beer", "Good for your're health", 1.99)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -27,7 +26,7 @@ func TestMemoryProduct_Add(t *testing.T) {
 func TestMemoryProduct_Get(t *testing.T) {
 	repo := New()
 
-	existingProduct, err := aggregate.NewProduct("Beer", "Good for your're health", 1.99)
+	existingProduct, err := product.NewProduct("Beer", "Good for your're health", 1.99)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -67,7 +66,7 @@ func TestMemoryProduct_Get(t *testing.T) {
 
 func TestMemoryProduct_Delete(t *testing.T) {
 	repo := New()
-	existingProduct, err := aggregate.NewProduct("Beer", "Good for your're health", 1.99)
+	existingProduct, err := product.NewProduct("Beer", "Good for your're health", 1.99)
 	if err != nil {
 		t.Fatal(err)
 	}

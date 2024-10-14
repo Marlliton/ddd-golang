@@ -3,24 +3,23 @@ package memory
 import (
 	"sync"
 
-	"github.com/Marlliton/ddd-golang/aggregate"
 	"github.com/Marlliton/ddd-golang/domain/product"
 	"github.com/google/uuid"
 )
 
 type MemoryProductRepository struct {
-	products map[uuid.UUID]aggregate.Product
+	products map[uuid.UUID]product.Product
 	sync.Mutex
 }
 
 func New() *MemoryProductRepository {
 	return &MemoryProductRepository{
-		products: make(map[uuid.UUID]aggregate.Product),
+		products: make(map[uuid.UUID]product.Product),
 	}
 }
 
-func (mr *MemoryProductRepository) GetAll() ([]aggregate.Product, error) {
-	var products []aggregate.Product
+func (mr *MemoryProductRepository) GetAll() ([]product.Product, error) {
+	var products []product.Product
 
 	for _, product := range mr.products {
 		products = append(products, product)
@@ -29,15 +28,15 @@ func (mr *MemoryProductRepository) GetAll() ([]aggregate.Product, error) {
 	return products, nil
 }
 
-func (mr *MemoryProductRepository) GetByID(id uuid.UUID) (aggregate.Product, error) {
+func (mr *MemoryProductRepository) GetByID(id uuid.UUID) (product.Product, error) {
 	if product, ok := mr.products[id]; ok {
 		return product, nil
 	}
 
-	return aggregate.Product{}, product.ErrProductNotFound
+	return product.Product{}, product.ErrProductNotFound
 }
 
-func (mr *MemoryProductRepository) Add(prod aggregate.Product) error {
+func (mr *MemoryProductRepository) Add(prod product.Product) error {
 	mr.Lock()
 	defer mr.Unlock()
 
@@ -49,7 +48,7 @@ func (mr *MemoryProductRepository) Add(prod aggregate.Product) error {
 	return product.ErrProductAlreadyExists
 }
 
-func (mr *MemoryProductRepository) Update(prod aggregate.Product) error {
+func (mr *MemoryProductRepository) Update(prod product.Product) error {
 	mr.Lock()
 	defer mr.Unlock()
 

@@ -1,10 +1,10 @@
-package aggregate_test
+package product_test
 
 import (
 	"log"
 	"testing"
 
-	"github.com/Marlliton/ddd-golang/aggregate"
+	"github.com/Marlliton/ddd-golang/domain/product"
 )
 
 func TestProduct_NewProduct(t *testing.T) {
@@ -20,7 +20,7 @@ func TestProduct_NewProduct(t *testing.T) {
 		{
 			test:        "shold return error if name is empty",
 			name:        "",
-			expectedErr: aggregate.ErrMissingValues,
+			expectedErr: product.ErrMissingValues,
 		}, {
 			test:        "valid values",
 			name:        "test",
@@ -32,7 +32,7 @@ func TestProduct_NewProduct(t *testing.T) {
 
 	for _, tc := range testCases {
 		t.Run(tc.test, func(t *testing.T) {
-			_, err := aggregate.NewProduct(tc.name, tc.description, tc.price)
+			_, err := product.NewProduct(tc.name, tc.description, tc.price)
 			log.Println(err)
 			if err != tc.expectedErr {
 				t.Errorf("expected error %v, got %v", tc.expectedErr, err)

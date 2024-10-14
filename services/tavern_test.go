@@ -3,7 +3,7 @@ package services
 import (
 	"testing"
 
-	"github.com/Marlliton/ddd-golang/aggregate"
+	"github.com/Marlliton/ddd-golang/domain/customer"
 	"github.com/google/uuid"
 )
 
@@ -24,7 +24,7 @@ func Test_Tavern(t *testing.T) {
 		t.Error(err)
 	}
 
-	customer, err := aggregate.NewCustomer("Jhon")
+	customer, err := customer.NewCustomer("Jhon")
 	if err != nil {
 		t.Error(err)
 	}

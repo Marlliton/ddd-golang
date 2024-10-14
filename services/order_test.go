@@ -3,26 +3,27 @@ package services
 import (
 	"testing"
 
-	"github.com/Marlliton/ddd-golang/aggregate"
+	"github.com/Marlliton/ddd-golang/domain/customer"
+	"github.com/Marlliton/ddd-golang/domain/product"
 	"github.com/google/uuid"
 )
 
-func init_products(t *testing.T) []aggregate.Product {
+func init_products(t *testing.T) []product.Product {
 	t.Helper()
 
-	beer, err := aggregate.NewProduct("Beer", "Healthy Beverage", 1.99)
+	beer, err := product.NewProduct("Beer", "Healthy Beverage", 1.99)
 	if err != nil {
 		t.Error(err)
 	}
-	peenuts, err := aggregate.NewProduct("Peenuts", "Healthy Snacks", 0.99)
+	peenuts, err := product.NewProduct("Peenuts", "Healthy Snacks", 0.99)
 	if err != nil {
 		t.Error(err)
 	}
-	wine, err := aggregate.NewProduct("Wine", "Healthy Snacks", 0.99)
+	wine, err := product.NewProduct("Wine", "Healthy Snacks", 0.99)
 	if err != nil {
 		t.Error(err)
 	}
-	products := []aggregate.Product{
+	products := []product.Product{
 		beer, peenuts, wine,
 	}
 	return products
@@ -39,7 +40,7 @@ func TestOrder_NewOrderService(t *testing.T) {
 		t.Error(err)
 	}
 
-	customer, err := aggregate.NewCustomer("Jhon")
+	customer, err := customer.NewCustomer("Jhon")
 	if err != nil {
 		t.Error(err)
 	}

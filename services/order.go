@@ -4,7 +4,6 @@ import (
 	"context"
 	"log"
 
-	"github.com/Marlliton/ddd-golang/aggregate"
 	"github.com/Marlliton/ddd-golang/domain/customer"
 	custmemory "github.com/Marlliton/ddd-golang/domain/customer/memory"
 	"github.com/Marlliton/ddd-golang/domain/customer/mongo"
@@ -42,7 +41,7 @@ func (os *OrderService) CreateOrder(customerID uuid.UUID, productsIDs []uuid.UUI
 		return 0, err
 	}
 
-	var products []aggregate.Product
+	var products []product.Product
 	var total float64
 
 	for _, id := range productsIDs {
@@ -60,7 +59,7 @@ func (os *OrderService) CreateOrder(customerID uuid.UUID, productsIDs []uuid.UUI
 	return total, nil
 }
 
-func WithMemoryProductRepository(products []aggregate.Product) OrderConfiguration {
+func WithMemoryProductRepository(products []product.Product) OrderConfiguration {
 	return func(os *OrderService) error {
 		pr := prodmemory.New()
 
